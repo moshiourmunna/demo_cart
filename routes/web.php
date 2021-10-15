@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('products.list');
 });
+// Route::get('/journals/list', 'Journal\AllJournalController@index')->name('allJournal.list');
