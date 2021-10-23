@@ -2,20 +2,67 @@
 
 @section('content')
 
+<?php
+use App\Cart;
+// use App\Http\Controllers\ProductController;
+// $total = ProductController::cartItem();
+
+?>
+
   <div class="main-content p-4">
     <section class="section">
-      <!-- <ul class="breadcrumb breadcrumb-style ">
-        <li class="breadcrumb-item">
-          <h4 class="page-title m-b-0">Advance Table</h4>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="index.html">
-            <i class="fas fa-home"></i></a>
-        </li>
-        <li class="breadcrumb-item active">Table</li>
-        <li class="breadcrumb-item active">Advance</li>
-      </ul> -->
       <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+            <div class="navbar-bg"></div>
+              <nav class="navbar navbar-expand-lg main-navbar">
+                <div class="form-inline mr-auto">
+                  <ul class="navbar-nav mr-3">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+                          collapse-btn"> <i data-feather="align-justify"></i></a></li>
+                    <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                        <i data-feather="maximize"></i>
+                      </a></li>
+                    <li>
+                      <form class="form-inline mr-auto">
+                        <div class="search-element">
+                          <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
+                          <button class="btn" type="submit">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+                @php
+                  $total = App\Cart::all()->where('user_ip',request()->ip())->sum
+                  (function($t){
+                    return $t->quantity;
+                  });
+                @endphp
+                <ul class="navbar-nav navbar-right">
+                  <li><a href="#"
+                      class="nav-link nav-link-lg mt-1"><span style="color:#131314">Product Quantity: {{$total}}</span>
+
+                    </a>
+                  </li>
+                  <li><a href="{{ route('products.cart') }}"
+                      class="nav-link nav-link-lg"><span style="color:#131314">Cart</span><i class="fas fa-cart-arrow-down" style="color:#aeb0e8"></i>
+
+                    </a>
+                  </li>
+                  <!-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                      class="nav-link notification-toggle nav-link-lg"><span style="color:#131314">Total : {{$total}}</span><i class="fas fa-cart-arrow-down" style="color:#aeb0e8"></i>
+
+                    </a>
+                  </li> -->
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <div class="card">
@@ -40,99 +87,60 @@
                       <th>Name</th>
                       <th>Catagory</th>
                       <th>Price</th>
-                      <th>Product</th>
+                      <!-- <th>Product</th> -->
+                      <th>Product Image</th>
                       <!-- <th>Status</th> -->
                       <th>Action</th>
                     </tr>
+{{--                      @dd($products)--}}
+                    @foreach ($products as $key=>$product)
                     <tr>
-                      <td class="p-0 text-center">01</td>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>0.00</td>
+                      <td class="p-0 text-center">{{$product->id}}</td>
+                      <td>{{$product->name}}</td>
+                      <td>{{$product->catagories->title}}</td>
+                      <td>{{$product->price}}</td>
+
                       <td>
-                        <img alt="image" src="assets/img/users/user-5.png" class="rounded-circle" width="35"
-                          data-toggle="tooltip" title="Wildan Ahdian">
+                        <img alt="image" src="{{ asset('assets/img/'. $product->product_img) }}" class="rounded-circle" width="35"
+                          data-toggle="tooltip" title="Product Image">
                       </td>
-                      <td><a href="#" class="btn btn-primary">Detail</a></td>
+                      <td>
+                        <a href="{{ route('products.show', [$product->id]) }}" class="btn btn-primary" title="" data-original-title="show">Detail</a>
+                      </td>
+                      <td>
+                        <form action="{{ route('products.addToCart',$product->id) }}" method="POST">
+                          @csrf
+                          <input type="hidden" name="product_id" value="{{$product->id}}">
+                          <input type="hidden" name="catagory_id" value="{{$product->catagory_id}}">
+                          <button type="submit" href="#" class="btn btn-success">Add To Cart</button>
+                        </form>
+                      </td>
                     </tr>
-                    <!-- <tr>
-                      <td class="p-0 text-center">
-                        <div class="custom-checkbox custom-control">
-                          <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                            id="checkbox-2">
-                          <label for="checkbox-2" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </td>
-                      <td>Redesign homepage</td>
-                      <td class="align-middle">
-                        <div class="progress" data-height="4" data-toggle="tooltip" title="40%">
-                          <div class="progress-bar" data-width="40"></div>
-                        </div>
-                      </td>
-                      <td>
-                        <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle" width="35"
-                          data-toggle="tooltip" title="Nur Alpiana">
-                      </td>
-                      <td>2018-04-10</td>
-                      <td>
-                        <div class="badge badge-info">Todo</div>
-                      </td>
-                      <td><a href="#" class="btn btn-primary">Detail</a></td>
-                    </tr>
-                    <tr>
-                      <td class="p-0 text-center">
-                        <div class="custom-checkbox custom-control">
-                          <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                            id="checkbox-3">
-                          <label for="checkbox-3" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </td>
-                      <td>Backup database</td>
-                      <td class="align-middle">
-                        <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                          <div class="progress-bar bg-warning" data-width="70"></div>
-                        </div>
-                      </td>
-                      <td>
-                        <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle" width="35"
-                          data-toggle="tooltip" title="Rizal Fakhri">
-                      </td>
-                      <td>2018-01-29</td>
-                      <td>
-                        <div class="badge badge-warning">In Progress</div>
-                      </td>
-                      <td><a href="#" class="btn btn-primary">Detail</a></td>
-                    </tr>
-                    <tr>
-                      <td class="p-0 text-center">
-                        <div class="custom-checkbox custom-control">
-                          <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                            id="checkbox-4">
-                          <label for="checkbox-4" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </td>
-                      <td>Input data</td>
-                      <td class="align-middle">
-                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                          <div class="progress-bar bg-success" data-width="100"></div>
-                        </div>
-                      </td>
-                      <td>
-                        <img alt="image" src="assets/img/users/user-2.png" class="rounded-circle" width="35"
-                          data-toggle="tooltip" title="Rizal Fakhri">
-                      </td>
-                      <td>2018-01-16</td>
-                      <td>
-                        <div class="badge badge-success">Completed</div>
-                      </td>
-                      <td><a href="#" class="btn btn-primary">Detail</a></td>
-                    </tr> -->
+                    @endforeach
+
                   </table>
+                  {{$products->links()}}
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- <div class="row float-right">
+          <div class="col-12 col-md-6 col-lg-6">
+              <div class="card-body">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="{{ route('products.list')}}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('products.list')}}">1</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('products.list')}}">2</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('products.list')}}">3</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('products.list')}}">Next</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
     </section>
   </div>

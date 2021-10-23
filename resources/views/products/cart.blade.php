@@ -19,7 +19,7 @@
       <div class="row">
           <div class="col-12">
             <div class="card">
-            <div class="navbar-bg"></div>
+              <div class="navbar-bg"></div>
               <nav class="navbar navbar-expand-lg main-navbar">
                 <div class="form-inline mr-auto">
                   <ul class="navbar-nav mr-3">
@@ -59,7 +59,7 @@
                   </li>
                   <!-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                       class="nav-link notification-toggle nav-link-lg"><span style="color:#131314">Total : {{$total}}</span><i class="fas fa-cart-arrow-down" style="color:#aeb0e8"></i>
-                    
+
                     </a>
                   </li> -->
                 </ul>
@@ -67,6 +67,13 @@
             </div>
           </div>
         </div>
+        @php
+         $total = 0;
+        @endphp
+        @foreach($carts as $cart)
+        @php
+         $total = ($cart->product_price) * ($cart->quantity);
+        @endphp
         <div class="row">
           <div class="col-12 col-sm-12 col-lg-9">
             <div class="card author-box card-primary">
@@ -79,7 +86,7 @@
                 </div>
                 <div class="author-box-details" style="margin-left:185px" >
                   <div class="author-box-name" style="font-size:18px">
-                    <a href="#" style="font-weight:600">Product Name : {{$product->name}}</a>
+                    <a href="#" style="font-weight:600">Product Name : {{$cart->product_name}}</a>
                   </div>
                   <div class="author-box-job" style="color:#96a2b4">Description</div>
                   <div class="author-box-description">
@@ -91,33 +98,30 @@
                   <div>
                     <ul>
                       <li>Brand</li>
-                      <li>Catagory : {{$catagory->title}}</li>
-                      <li>Price : {{$product->price}}</li>
-                      <!-- <li>Quantity : </li> -->
+                      <li>Catagory : {{$cart->title}}</li>
+                      <li>Price : {{$cart->product_price}}</li>
+                      <li>Quantity : {{$cart->quantity}}</li>
+                      <li>Total : {{$total}}</li>
                     </ul>
                   </div>
                   <div class="mt-sm-0 mt-3">
-                    <table>
-                      <tr>
-                        <td>
-                          <a href="#" style="font-size:12px;border-radius:30px" class="btn btn-primary mr-3"  >Buy Now</a>
-                        </td>
-                        <td>
-                          <form action="{{ route('products.addToCart',$product->id) }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <input type="hidden" name="catagory_id" value="{{$product->catagory_id}}">
-                            <button type="submit" href="#" style="font-size:12px;border-radius:30px" class="btn btn-success">Add To Cart</button>
-                          </form>
-                        </td>
-                      </tr>
-                    </table>
+                    <form action="{{ route('products.addToCart',$cart->id) }}" method="POST">
+                      @csrf
+                      <a href="#" style="font-size:12px;border-radius:30px" class="btn btn-primary mt-3 follow-btn" data-follow-action="alert('follow clicked');"
+                        data-unfollow-action="alert('unfollow clicked');">By Now</a>
+                      <input type="hidden" name="product_id" value="{{$cart->id}}">
+                      <input type="hidden" name="catagory_id" value="{{$cart->catagory_id}}">
+{{--                      <a type="submit" href="#" style="font-size:12px;border-radius:30px" class="btn btn-primary mt-3 follow-btn" data-follow-action="alert('follow clicked');"--}}
+{{--                      data-unfollow-action="alert('unfollow clicked');">Add To Cart</a>--}}
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        @endforeach
+
       </div>
     </section>
   </div>

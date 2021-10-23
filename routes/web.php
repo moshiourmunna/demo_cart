@@ -13,7 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('products.list');
+// Route::get('/', function () {
+//     return view('products.list');
+// });
+Route::get('/product/detail', function () {
+    return view('products.show');
 });
-// Route::get('/journals/list', 'Journal\AllJournalController@index')->name('allJournal.list');
+Route::get('/', 'ProductController@index')->name('products.list');
+Route::post('/product/addToCart/{product_id}', 'ProductController@addToCart')->name('products.addToCart');
+Route::get('/product/cart', 'ProductController@cart')->name('products.cart');
+Route::get('/product/detail/{id}', 'ProductController@show')->name('products.show');
+// Route::post('/product/addToCart', 'ProductController@addToCart')->name('products.addToCart');
