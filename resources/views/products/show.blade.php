@@ -4,7 +4,7 @@
 
   <div class="main-content p-4">
     <section class="section">
-      <!-- <ul class="breadcrumb breadcrumb-style ">
+      <ul class="breadcrumb breadcrumb-style ">
         <li class="breadcrumb-item">
           <h4 class="page-title m-b-0">Advance Table</h4>
         </li>
@@ -14,7 +14,7 @@
         </li>
         <li class="breadcrumb-item active">Table</li>
         <li class="breadcrumb-item active">Advance</li>
-      </ul> -->
+      </ul>
       <div class="section-body">
       <div class="row">
           <div class="col-12">
@@ -59,7 +59,7 @@
                   </li>
                   <!-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                       class="nav-link notification-toggle nav-link-lg"><span style="color:#131314">Total : {{$total}}</span><i class="fas fa-cart-arrow-down" style="color:#aeb0e8"></i>
-                    
+
                     </a>
                   </li> -->
                 </ul>
