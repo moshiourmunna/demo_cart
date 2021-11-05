@@ -4,7 +4,7 @@
 
   <div class="main-content p-4">
     <section class="section">
-      <ul class="breadcrumb breadcrumb-style ">
+      <!-- <ul class="breadcrumb breadcrumb-style ">
         <li class="breadcrumb-item">
           <h4 class="page-title m-b-0">Advance Table</h4>
         </li>
