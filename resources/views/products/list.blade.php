@@ -8,7 +8,7 @@ use App\Cart;
 // $total = ProductController::cartItem();
 
 ?>
-<p>dadfaf</p>
+<p>aniks update</p>
   <div class="main-content p-4">
     <section class="section">
       <div class="section-body">
